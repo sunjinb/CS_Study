@@ -19,6 +19,6 @@ public class SuperMario2 {
                 answer = result;
             }
         }
-        System.out.println(answer);
+        System.out.println("answer = " + answer);
     }
 }
