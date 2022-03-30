@@ -20,6 +20,7 @@ int main(void)
             result = sum;
         }
     }
+
     cout << "result : " << result;
     return 0;
 }
