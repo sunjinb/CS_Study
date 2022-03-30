@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SuperMario{
+public class SuperMario {
 
     static int max = 10;
     static int[] num = new int[max];
@@ -11,22 +11,22 @@ public class SuperMario{
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        for(int i = 0; i < max; i++){
+        for (int i = 0; i < max; i++) {
             num[i] = Integer.parseInt(br.readLine());
         }
         compare(num);
     }
 
-    static void compare(int[] num){
+    static void compare(int[] num) {
         int sum = 0;
         int result = 0;
-        for(int i = 0; i < max; i++){
+        for (int i = 0; i < max; i++) {
             sum += num[i];
-            if(Math.abs(100 - sum) > Math.abs(100 - result)){
+            if (Math.abs(100 - sum) > Math.abs(100 - result)) {
                 break;
             }
             result = sum;
         }
-        System.out.println(result);
+        System.out.println("result : " + result);
     }
 }
