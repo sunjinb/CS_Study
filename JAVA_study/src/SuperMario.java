@@ -5,12 +5,12 @@ import java.io.InputStreamReader;
 public class SuperMario {
 
     static int max = 10;
-    static int[] num = new int[max];
+    static int[] num = new int[max]; 
 
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        
         for (int i = 0; i < max; i++) {
             num[i] = Integer.parseInt(br.readLine());
         }
