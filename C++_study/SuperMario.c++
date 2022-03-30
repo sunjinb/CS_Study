@@ -21,6 +21,6 @@ int main(void)
         }
     }
     cout << "result : " << result;
-
+    cout << "changes" << endl;
     return 0;
 }
