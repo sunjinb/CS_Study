@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SuperMario {
+public class cs_2851 {
 
     static int max = 10;
     static int[] num = new int[max]; 

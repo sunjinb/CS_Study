@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-public class Blackjack {
+public class cs_2789 {
 
     public static void main(String[] args) throws IOException {
 

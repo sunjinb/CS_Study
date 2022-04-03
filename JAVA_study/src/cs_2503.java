@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class NumberBaseball {
+public class cs_2503 {
 
     static int n;
     static int Strike_cnt;
