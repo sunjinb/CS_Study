@@ -13,7 +13,7 @@ public class cs_10773 {
         for(int i = 0; i < K; i++) {
             int number = in.nextInt();
 
-            if(number == 0) {	// 0이라면 스택에 저장된 top 원소를 지운다.
+            if(number == 0) {	// 0이라면 스택에 저장된 top 원소 삭제
                 stack.pop();
             }
             else {
