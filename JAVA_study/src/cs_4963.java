@@ -12,12 +12,11 @@ public class cs_4963 {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-
+        StringTokenizer st;
         while (true) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            w = Integer.parseInt(br.readLine());
-            h = Integer.parseInt(br.readLine());
+            st = new StringTokenizer(br.readLine());
+            w = Integer.parseInt(st.nextToken());
+            h = Integer.parseInt(st.nextToken());
             map = new int[h][w];
             visited = new boolean[h][w];
             int cnt = 0;
@@ -41,7 +40,7 @@ public class cs_4963 {
                     }
                 }
             }
-            sb.append(cnt).append('\n');
+            System.out.println(cnt);
         }
     }
     static void findIsland(int row, int col){
@@ -50,9 +49,11 @@ public class cs_4963 {
             int next_row = row + d_row[i];
             int next_col = col + d_col[i];
 
+            //배열 범위 벗어나면
             if(next_row < 0 || next_row >= h || next_col < 0 || next_col >= w){
                 continue;
             }
+            //방문하지 않았고 섬이라면
             if(map[next_row][next_col] == 1 && !visited[next_row][next_col]){
                 findIsland(next_row, next_col);
             }
