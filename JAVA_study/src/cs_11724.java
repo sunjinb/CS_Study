@@ -6,47 +6,52 @@ import java.util.StringTokenizer;
 public class cs_11724 {
 
     static int N;
-    static int M;
-    static int[][] adj;  // 인접 행렬
-
-    static boolean[] visit;
+    static int[][] graph;  // 인접 행렬
+    static boolean[] visited;  // 방문했는지
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-        for(int i = 0; i < M; i++){
+        // 그래프 크기 할당
+        graph = new int[N + 1][N + 1];
+
+        // 간선의 양 끝 점 입력
+        for(int i = 0 ; i < M; i++){
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
-            adj[u][v] = 1;
-            adj[v][u] = 1;
+            // 무방향그래프 두 방향에 값 할당
+            graph[u][v] = 1;
+            graph[v][u] = 1;
         }
+        
+        visited = new boolean[N + 1];
+        int count = 0;
 
-        visit = new boolean[N + 1];
-
-        int count = 0; // 연결 요소 개수
-
-        // 방문 배열을 돌면서 방문하지 않은 정점이 있으면 탐색하고 연결요소 개수 1 증가
+        // 아직 탐색하지 않았다면 탐색 후 요소 count++
         for(int i = 1; i < N + 1; i++){
-            if(!visit[i]){
+            if(!visited[i]){
                 dfs(i);
                 count++;
             }
         }
         System.out.println(count);
     }
-    public static void dfs(int start){
-        visit[start] = true;
-        
-        // 방문 배열 처음부터 돌면서 간선이 연결되어 있고, 방문을 하지 않았다면 탐색
+
+    public static void dfs(int node){
+        // 방문한 정점으로 설정
+        visited[node] = true;
         for(int i = 1; i <= N; i++){
-            if(adj[start][i] == 1 && !visit[i]){
+            //아직 방문하지 않았고, 그래프에 값이 할당해있다면 탐색
+            if(graph[node][i] == 1 && !visited[i]){
                 dfs(i);
             }
         }
     }
 }
+
