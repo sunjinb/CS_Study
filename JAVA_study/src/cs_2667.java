@@ -3,14 +3,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import static java.util.Collections.sort;
+
 public class cs_2667 {
     static int N;
     static int[][] map;
     static boolean[][] visited;
     static int count;
-    static int[] result = new int[25 * 25];
+    static ArrayList<Integer> result;
     static int[] dx = {0, 0, -1, 1};
-    static int[] dy = {1, -1, 0, 0};
+    static int[] dy = {-1, 1, 0, 0};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -24,44 +26,48 @@ public class cs_2667 {
 
         // 지도 그리기
         for(int i = 0; i < N; i++){
-            st = new StringTokenizer(br.readLine());
-            String str = st.toString();
+            String str = br.readLine();
             for(int j = 0; j < N; j++){
-                map[i][j] = str.charAt(j);
+                map[i][j] = str.charAt(j)-'0';
             }
         }
 
+        // 단지별 세대수
         count = 0;
+        
+        // 단지별 세대수가 몇개인지 저장
+        result = new ArrayList<>();
 
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
                 if(!visited[i][j] && map[i][j] == 1){
-                    count++;
+                    count = 1;
                     dfs(i, j);
+                    result.add(count);
                 }
             }
         }
-        Arrays.sort(result);
-        for(int o : result){
-            if(result[o] != 0){
-                System.out.println(result[o]);
-            }
+        sort(result);
+        System.out.println(result.size());
+        for(int c : result){
+            System.out.println(c);
         }
+
     }
 
     public static void dfs(int row, int col){
         visited[row][col] = true;
-        result[count]++;
+        
         for(int i = 0; i < 4; i++){
-            int next_row = row + dx[i];
-            int next_col = col + dy[i];
+            int next_row = row + dy[i];
+            int next_col = col + dx[i];
             if(next_row < 0 || next_col < 0 || next_row >= N || next_col >= N) {
                 continue;
             }
 
             if(!visited[next_row][next_col] && map[next_row][next_col] == 1){
-                dfs(next_row, next_col);
                 count++;
+                dfs(next_row, next_col);
             }
         }
     }
