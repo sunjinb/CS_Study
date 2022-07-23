@@ -28,7 +28,7 @@ public class cs_2667 {
         for(int i = 0; i < N; i++){
             String str = br.readLine();
             for(int j = 0; j < N; j++){
-                map[i][j] = str.charAt(j)-'0';
+                map[i][j] = str.charAt(j) - '0';
             }
         }
 
