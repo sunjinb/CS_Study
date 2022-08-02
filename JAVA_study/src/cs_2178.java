@@ -65,7 +65,7 @@ public class cs_2178 {
                 q.add(new int[]{next_x, next_y});
                 // 방문했다 설정
                 visited[next_x][next_y] = true;
-                //거리 계산
+                // 거리 계산
                 maze[next_x][next_y] = maze[tail_x][tail_y] + 1;
             }
         }
