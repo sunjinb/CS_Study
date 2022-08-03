@@ -45,6 +45,7 @@ public class cs_2468 {
                 for (int j = 0; j < N; j++) {
                     if (!visited[i][j] && map[i][j] > h) {
                         dfs(i, j, h);
+                        count++;
                     }
                 }
             }
@@ -63,7 +64,6 @@ public class cs_2468 {
 
             if(next_row >= 0 && next_row < N && next_col >= 0 && next_col < N){
                 if(!visited[next_row][next_col] && map[next_row][next_col] > height){
-                    count++;
                     dfs(next_row, next_col, height);
                 }
             }
