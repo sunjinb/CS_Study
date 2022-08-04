@@ -40,18 +40,18 @@ public class cs_2583 {
             // 지도 그리기
             for(int height = point[1]; height < point[3]; height++){
                 for(int width = point[0]; width < point[2]; width++){
-                    map[height][width] = 1;
+                    map[M - 1 - height][width] = 1;
                 }
             }
         }
 
-        // 지도 잘 그려졌는지 확인
-//        for(int i = 0; i < M; i++){
-//            for(int j = 0; j < N; j++){
-//                System.out.print(map[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+//         지도 잘 그려졌는지 확인
+        for(int i = 0; i < M; i++){
+            for(int j = 0; j < N; j++){
+                System.out.print(map[i][j] + " ");
+            }
+            System.out.println();
+        }
 
         count = 0;
 
