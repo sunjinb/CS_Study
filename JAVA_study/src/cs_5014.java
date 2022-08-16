@@ -22,31 +22,31 @@ public class cs_5014 {
         // 아래로 D층을 가는 버튼
         D = Integer.parseInt(st.nextToken());
 
-        int[] arr = new int[F + 1];
-        System.out.println(bfs(F, S, G, U, D, arr));
+        int[] array = new int[F + 1];
+        System.out.println(bfs(F, S, G, U, D, array));
     }
-    public static String bfs(int floor, int start, int end, int up, int down, int[] arr){
+    public static String bfs(int floor, int start, int end, int up, int down, int[] array){
         Queue<Integer> q = new LinkedList<Integer>();
         q.add(start);
-        arr[start] = 1;
+        array[start] = 1;
 
         while (!q.isEmpty()) {
             int current = q.poll();
             if (current == end) {
-                return String.valueOf(arr[current] - 1);
+                return String.valueOf(array[current] - 1);
             }
-            //다음 up 이동할 위치가 최대값보다 작고 방문하지 않은 지점이여야 한다.
+            //다음 이동할 위치가 최대값보다 작고 미방문 지점
             if (current + up <= floor) {
-                if (arr[current + up] == 0) {
-                    arr[current + up] = arr[current] + 1;
+                if (array[current + up] == 0) {
+                    array[current + up] = array[current] + 1;
                     q.add(current + up);
                 }
 
             }
-            //다음 down 이동할 위치가 최대값보다 작고 방문하지 않은 지점이여야 한다.
+            //다음 이동할 위치가 최솟값보다 크고 미방문 지점
             if (current - down > 0) {
-                if (arr[current - down] == 0) {
-                    arr[current - down] = arr[current] + 1;
+                if (array[current - down] == 0) {
+                    array[current - down] = array[current] + 1;
                     q.add(current - down);
                 }
             }
