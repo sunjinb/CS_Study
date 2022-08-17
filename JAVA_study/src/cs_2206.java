@@ -1,76 +1,90 @@
-import java.util.*;
 import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class cs_2206 {
-    public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(bf.readLine());
+    static int M, N;
+    static int[][] map;
+    static int[][] visited;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
 
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+    static class Point {
+        int x, y, distance;
+        int drill; // 공사 횟수
 
-        // 시작지점과 도착지점이 같을 경우!
-        if(N-1 == 0 && M-1 == 0){
-            System.out.print(1);
-            System.exit(0);
+        public Point(int x, int y, int distance, int drill) {
+            this.x = x;
+            this.y = y;
+            this.distance = distance;
+            this.drill = drill;
         }
+    }
 
-        int[] dx = {1, 0, -1, 0};
-        int[] dy = {0, 1, 0, -1};
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        char[][] miro = new char[N][M];  // 미로 배열
-        int[][] dist = new int[N][M];    // 거리 측정 배열
-        boolean[][][] visit = new boolean[2][N][M];    // 벽을 부순 여부에 따라 방문 여부 기록
-        Queue<int[]> qu = new LinkedList<>();
+        st = new StringTokenizer(br.readLine());
+        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < N; i++) {
-            String s = bf.readLine();
-            for (int j = 0; j < M; j++) {
-                miro[i][j] = s.charAt(j);
+        map = new int[M][N];
+        visited = new int[M][N];
+
+        for (int i = 0; i < M; i++) {
+            String str = br.readLine();
+            for (int j = 0; j < N; j++) {
+                map[i][j] = str.charAt(j) - '0';
+                visited[i][j] = 9999;
             }
         }
+        int ans = bfs(0, 0);
+        System.out.println(ans);
 
-        // 시작점 세팅 (x좌표, y좌표, crash 여부)
-        qu.offer(new int[]{0, 0, 0});
+    }
 
-        while (!qu.isEmpty()) {
-            int[] cur = qu.poll();  // 현재 위치 뽑기
+    public static int bfs(int row, int col) {
+        Queue<Point> q = new LinkedList<>();
 
-            // 상,하,좌,우 탐색
-            for(int i=0; i<4; i++){
-                int nX = cur[0] + dx[i];
-                int nY = cur[1] + dy[i];
+        q.add(new Point(row, col, 1, 0));
+        visited[row][col] = 0;
 
-                if (nX < 0 || nX >= N || nY < 0 || nY >= M) {
+        while (!q.isEmpty()) {
+            Point point = q.poll();
+
+            if (point.x == M - 1 && point.y == N - 1) {
+                return point.distance;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int next_row = point.x + dx[i];
+                int next_col = point.y + dy[i];
+
+                if (next_row < 0 || next_row >= M || next_col < 0 || next_col >= N) {
                     continue;
                 }
+                // 방문하지 않은 경우
+                if (visited[next_row][next_col] > point.drill) {
 
-                // 다음 칸에 벽이 있을 때 -> (1) 벽을 부순적이 있는지 체크
-                //                        (2) 그 벽을 방문한적이 있는지 체크
-                if (miro[nX][nY] == '1') {
-                    if(cur[2] == 0 && !visit[1][nX][nY]){
-                        visit[cur[2]][nX][nY] = true;    // 방문 처리
-                        dist[nX][nY] = dist[cur[0]][cur[1]] + 1; // 거리 측정
-                        qu.offer(new int[]{nX, nY, 1});    // 다시 큐에 넣어줘서 BFS!
+                    // 벽이 아닐 때
+                    if (map[next_row][next_col] == 0) {
+                        q.add(new Point(next_col, next_row, point.distance + 1, point.drill));
+                        //방문 처리
+                        visited[next_row][next_col] = point.drill;
                     }
-                }
-                // 벽이 아닐 경우 -> 벽을 "부순 여부"에 따른 방문을 했는지 체크!
-                else{
-                    if(!visit[cur[2]][nX][nY]){
-                        // 해당 칸을 방문을 안했을 때!
-                        visit[cur[2]][nX][nY] = true;    // 방문 처리
-                        dist[nX][nY] = dist[cur[0]][cur[1]] + 1; // 거리 측정
-                        qu.offer(new int[]{nX, nY, cur[2]}); // 다시 큐에 넣어줘서 BFS!
+                    // 벽일 때
+                    else {
+                        if (point.drill == 0) { // 지금까지 벽을 부순 횟수가 0이라면
+                            q.add(new Point(next_col, next_row, point.distance + 1, point.drill + 1));
+                            // 방문 처리
+                            visited[next_row][next_col] = point.drill + 1;
+                        }
                     }
-                }
-                // 도착지점에 도달 했을 때 출력하고 종료!
-                if(nX == N-1 && nY == M-1){
-                    System.out.print(dist[nX][nY] + 1);
-                    System.exit(0);
                 }
             }
         }
-        // 도달을 못했으므로 -1 출력!
-        System.out.print(-1);
+        return -1;
     }
 }
