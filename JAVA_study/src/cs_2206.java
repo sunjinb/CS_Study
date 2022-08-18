@@ -7,6 +7,7 @@ public class cs_2206 {
     static int M, N;
     static int[][] map;
     static int[][] visited;
+    static int answer;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
 
@@ -34,18 +35,21 @@ public class cs_2206 {
         visited = new int[M][N];
 
         for (int i = 0; i < M; i++) {
-            String str = br.readLine();
+            String[] str = br.readLine().split("");
             for (int j = 0; j < N; j++) {
-                map[i][j] = str.charAt(j) - '0';
+                map[i][j] = Integer.parseInt(str[j]);
                 visited[i][j] = 9999;
             }
         }
-        int ans = bfs(0, 0);
-        System.out.println(ans);
+
+        answer = 9999;
+        bfs(0, 0);
+        if(answer >= 9999) System.out.println(-1);
+        else System.out.println(answer);
 
     }
 
-    public static int bfs(int row, int col) {
+    public static void bfs(int row, int col) {
         Queue<Point> q = new LinkedList<>();
 
         q.add(new Point(row, col, 1, 0));
@@ -55,7 +59,8 @@ public class cs_2206 {
             Point point = q.poll();
 
             if (point.x == M - 1 && point.y == N - 1) {
-                return point.distance;
+                answer = point.distance;
+                break;
             }
 
             for (int i = 0; i < 4; i++) {
@@ -65,26 +70,22 @@ public class cs_2206 {
                 if (next_row < 0 || next_row >= M || next_col < 0 || next_col >= N) {
                     continue;
                 }
-                // 방문하지 않은 경우
-                if (visited[next_row][next_col] > point.drill) {
 
-                    // 벽이 아닐 때
-                    if (map[next_row][next_col] == 0) {
-                        q.add(new Point(next_col, next_row, point.distance + 1, point.drill));
-                        //방문 처리
-                        visited[next_row][next_col] = point.drill;
-                    }
-                    // 벽일 때
-                    else {
-                        if (point.drill == 0) { // 지금까지 벽을 부순 횟수가 0이라면
-                            q.add(new Point(next_col, next_row, point.distance + 1, point.drill + 1));
-                            // 방문 처리
-                            visited[next_row][next_col] = point.drill + 1;
-                        }
+                if(visited[next_row][next_col] <= point.drill){
+                    continue;
+                }
+
+                if(map[next_row][next_col] == 0){
+                    visited[next_row][next_col] = point.drill;
+                    q.add(new Point(next_row, next_col, point.distance + 1, point.drill));
+                }
+                else{
+                    if(point.drill == 0){
+                        visited[next_row][next_col] = point.drill + 1;
+                        q.add(new Point(next_row, next_col, point.distance + 1, point.drill + 1));
                     }
                 }
             }
         }
-        return -1;
     }
 }
