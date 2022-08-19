@@ -6,20 +6,20 @@ import java.util.StringTokenizer;
 public class cs_2206 {
     static int M, N;
     static int[][] map;
-    static int[][] visited;
+    static boolean[][] visited;
     static int answer;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
 
     static class Point {
         int x, y, distance;
-        int drill; // 공사 횟수
+        int destroy;
 
-        public Point(int x, int y, int distance, int drill) {
+        public Point(int x, int y, int distance, int destroy) {
             this.x = x;
             this.y = y;
             this.distance = distance;
-            this.drill = drill;
+            this.destroy = destroy;
         }
     }
 
@@ -32,13 +32,13 @@ public class cs_2206 {
         N = Integer.parseInt(st.nextToken());
 
         map = new int[M][N];
-        visited = new int[M][N];
+        visited = new boolean[M][N];
 
         for (int i = 0; i < M; i++) {
             String[] str = br.readLine().split("");
             for (int j = 0; j < N; j++) {
                 map[i][j] = Integer.parseInt(str[j]);
-                visited[i][j] = 9999;
+                visited[i][j] = false;
             }
         }
 
@@ -53,7 +53,7 @@ public class cs_2206 {
         Queue<Point> q = new LinkedList<>();
 
         q.add(new Point(row, col, 1, 0));
-        visited[row][col] = 0;
+        visited[row][col] = true;
 
         while (!q.isEmpty()) {
             Point point = q.poll();
@@ -71,18 +71,22 @@ public class cs_2206 {
                     continue;
                 }
 
-                if(visited[next_row][next_col] <= point.drill){
+                if(visited[next_row][next_col]){
                     continue;
                 }
 
+                // 배열 하나 더 만들어서
+
+
+                // 갈 수 있는 부분
                 if(map[next_row][next_col] == 0){
-                    visited[next_row][next_col] = point.drill;
-                    q.add(new Point(next_row, next_col, point.distance + 1, point.drill));
+                    visited[next_row][next_col] = true;
+                    q.add(new Point(next_row, next_col, point.distance + 1, point.destroy));
                 }
                 else{
-                    if(point.drill == 0){
-                        visited[next_row][next_col] = point.drill + 1;
-                        q.add(new Point(next_row, next_col, point.distance + 1, point.drill + 1));
+                    if(point.destroy == 0){
+                        visited[next_row][next_col] = true;
+                        q.add(new Point(next_row, next_col, point.distance + 1, point.destroy + 1));
                     }
                 }
             }
