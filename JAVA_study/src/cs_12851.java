@@ -11,6 +11,7 @@ public class cs_12851 {
     static int count;
     static int[] visited;
 
+    // 위치와 걸린 시간
     static class Point {
         int point;
         int time;

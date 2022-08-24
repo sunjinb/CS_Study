@@ -102,6 +102,7 @@ public class cs_16236{
         }
     }
 
+    // 먹이를 찾는 과정
     public static void bfs(int row, int col){
         Queue<Shark> q = new LinkedList<Shark>();
         // 상어의 첫 위치의 방문 여부(거리)를 0으로 초기화
