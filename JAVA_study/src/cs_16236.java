@@ -65,7 +65,6 @@ public class cs_16236{
 
                 // 먹이 먹은 개수 증가
                 eat_count++;
-
                 // 아기 상어 몸집 크기만큼 먹이를 먹었다면
                 if(eat_count == shark_size){
                     // 아기 상어 크기 증가, 먹이 먹은 개수 초기화
@@ -80,12 +79,10 @@ public class cs_16236{
                 shark_row = min_row;
                 shark_col = min_col;
             }
-
             else{
                 break;
             }
         }
-
         System.out.println(result);
     }
 
@@ -147,7 +144,6 @@ public class cs_16236{
                                 min_col = next_col;
                             }
                         }
-                        // 가장 왼쪽
                         else if (min_row > next_row) {
                             min_row = next_row;
                             min_col = next_col;
