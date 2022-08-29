@@ -25,6 +25,7 @@ public class cs_11559 {
             }
         }
         
+        // 계속해서 뿌요놀이
         while(true){
             // 종료 조건
             boolean enough = false;
