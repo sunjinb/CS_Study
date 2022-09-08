@@ -14,9 +14,37 @@ public class cs_2805 {
 
         // 각각 나무의 높이 선언
         int[] tree = new int[N];
+
+        int min = 0;
+        int max = 0;
+
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < tree.length; i++){
             tree[i] = Integer.parseInt(st.nextToken());
+
+            if (max < tree[i]) {
+                max = tree[i];
+            }
         }
+
+        // 이분 탐색
+        while(min < max){
+            int mid = (min + max) / 2;
+            long sum = 0;
+            for(int treeHeight : tree){
+                if(treeHeight - mid > 0){
+                    sum += (treeHeight - mid);
+                }
+            }
+
+            if(sum < M){
+                max = mid;
+            }
+
+            else{
+                min = mid + 1;
+            }
+        }
+        System.out.println(min - 1);
     }
 }
