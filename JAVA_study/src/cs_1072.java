@@ -20,7 +20,7 @@ public class cs_1072 {
         }
         else {
             long start = 0;
-            long end = 2000000000;
+            long end = Integer.MAX_VALUE;
 
             while (start < end){
                 long mid = (start + end) / 2;
