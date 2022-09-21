@@ -49,14 +49,17 @@ public class cs_2110 {
     public static int canInstall(int distance){
         // 첫번째 집은 무조건 설치
         int count = 1;
+        // 이전에 설치한 집의 좌표
         int lastLocate = house[0];
 
         for(int i = 1; i < house.length; i++){
+            // 현재 설치할 집의 좌표
             int locate = house[i];
 
+            // 현재 설치할 집의 좌표 - 이전에 설치한 집의 좌표 >= 최소 거리 라면 설치가 가능한 뜻이므로
             if(locate - lastLocate >= distance){
                 count++;
-                lastLocate = locate;
+                lastLocate = locate; // 이전의 설치한 집의 좌표 갱신
             }
         }
         return count;
