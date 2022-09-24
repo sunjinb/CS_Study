@@ -18,6 +18,10 @@ public class cs_2295 {
 
         int result = 0;
 
+        int start = 0;
+        int end = U[N];
+
+
 
         System.out.println(result);
     }
