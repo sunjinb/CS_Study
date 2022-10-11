@@ -1,95 +1,87 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.StringTokenizer;
+
 
 public class cs_2206 {
-    static int M, N;
-    static int[][] map;
-    static boolean[][] visited;
-    static int answer;
-    static int[] dx = {-1, 1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
+    static class Loc{
+        int i;
+        int j;
+        int cnt;
+        boolean destroyed;
 
-    static class Point {
-        int x, y, distance;
-        int destroy;
-
-        public Point(int x, int y, int distance, int destroy) {
-            this.x = x;
-            this.y = y;
-            this.distance = distance;
-            this.destroy = destroy;
+        public Loc(int i, int j, int cnt, boolean d) {
+            this.i = i;
+            this.j = j;
+            this.cnt = cnt;
+            this.destroyed = d;
         }
     }
+
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
+        String[] inputs = br.readLine().split(" ");
 
-        st = new StringTokenizer(br.readLine());
-        M = Integer.parseInt(st.nextToken());
-        N = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(inputs[0]);
+        int m = Integer.parseInt(inputs[1]);
 
-        map = new int[M][N];
-        visited = new boolean[M][N];
-
-        for (int i = 0; i < M; i++) {
-            String[] str = br.readLine().split("");
-            for (int j = 0; j < N; j++) {
-                map[i][j] = Integer.parseInt(str[j]);
-                visited[i][j] = false;
+        char[][] map = new char[n][m];
+        for (int i = 0; i < n; i++) {
+            String input = br.readLine();
+            for (int j = 0; j < m; j++) {
+                map[i][j] = input.charAt(j);
             }
         }
 
-        answer = 9999;
-        bfs(0, 0);
-        if(answer >= 9999) System.out.println(-1);
-        else System.out.println(answer);
 
-    }
+        Queue<Loc> q = new LinkedList<>();
+        q.add(new Loc(0, 0, 1, false));
 
-    public static void bfs(int row, int col) {
-        Queue<Point> q = new LinkedList<>();
+        int[] mi = {0, 0, -1, 1};
+        int[] mj = {-1, 1, 0, 0};
 
-        q.add(new Point(row, col, 1, 0));
-        visited[row][col] = true;
+        boolean[][][] visited = new boolean[n][m][2];
 
         while (!q.isEmpty()) {
-            Point point = q.poll();
+            Loc now = q.poll();
 
-            if (point.x == M - 1 && point.y == N - 1) {
-                answer = point.distance;
-                break;
+            if (now.i == n - 1 && now.j == m - 1) {
+                System.out.println(now.cnt);
+                return;
             }
 
-            for (int i = 0; i < 4; i++) {
-                int next_row = point.x + dx[i];
-                int next_col = point.y + dy[i];
+            for (int d = 0; d < 4; d++) {
+                int ni = now.i + mi[d];
+                int nj = now.j + mj[d];
 
-                if (next_row < 0 || next_row >= M || next_col < 0 || next_col >= N) {
-                    continue;
-                }
+                if(ni<0 || ni>=n || nj<0 || nj>=m) continue;
 
-                if(visited[next_row][next_col]){
-                    continue;
-                }
+                int next_cnt = now.cnt+1;
 
-                // 배열 하나 더 만들어서
-
-
-                // 갈 수 있는 부분
-                if(map[next_row][next_col] == 0){
-                    visited[next_row][next_col] = true;
-                    q.add(new Point(next_row, next_col, point.distance + 1, point.destroy));
-                }
-                else{
-                    if(point.destroy == 0){
-                        visited[next_row][next_col] = true;
-                        q.add(new Point(next_row, next_col, point.distance + 1, point.destroy + 1));
+                if(map[ni][nj]=='0'){ // 벽이 아니면
+                    if(!now.destroyed && !visited[ni][nj][0]) { // 부신 벽이 여태까지 없었으면
+                        q.add(new Loc(ni, nj, next_cnt, false));
+                        visited[ni][nj][0] = true;
+                    }else if(now.destroyed && !visited[ni][nj][1]){ // 벽을 한번 부신 적이 있으면
+                        q.add(new Loc(ni, nj, next_cnt, true));
+                        visited[ni][nj][1] = true;
                     }
+
+                }else if(map[ni][nj]=='1'){ // 벽이면
+
+                    if(!now.destroyed){ // 한번도 벽을 부순적이 없다면 부순다~
+                        q.add(new Loc(ni, nj, next_cnt, true));
+                        visited[ni][nj][1] = true;
+                    }
+                    // 한번 부순 적이 있다면 또 부수고 갈 수 없기 때문에 pass
                 }
             }
+
         }
+
+        System.out.println(-1);
     }
 }
