@@ -12,7 +12,7 @@ public class Main {
         num1 = sc.nextInt();
         num2 = sc.nextInt();
 
-        sc.close(); // 스캐너 닫기
+        sc.close();
 
         calculate(round, num1, num2);
     }
