@@ -18,9 +18,10 @@ public class cs_14891 {
         }
 
         int K = Integer.parseInt(br.readLine());
+
         for(int i = 0; i < K; i++){
             st = new StringTokenizer(br.readLine());
-            int idx = Integer.parseInt(st.nextToken()) -1;
+            int idx = Integer.parseInt(st.nextToken()) - 1;
             int dir = Integer.parseInt(st.nextToken());
             operation(idx, dir);
         }
