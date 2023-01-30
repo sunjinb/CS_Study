@@ -18,18 +18,20 @@ public class Main {
             array[i] = Integer.parseInt(st.nextToken());
         }
         // 최댓값
-        int max = K * -100;
+        int sum = 0;
 
-        // 시작점
-        for(int i = 0; i < N - K + 1; i++){
-            int sum = 0;
-            // K개의 합
-            for(int j = i; j < i + K; j++){
-                sum += array[j];
-            }
-            if(max < sum) max = sum;
+        for(int i = 0; i < K; i++){
+            sum += array[i];
         }
+        int max = sum;
 
+        for(int i = K; i < N; i++){
+            sum -= array[i - K];
+            sum += array[i];
+            if(max <= sum){
+                max = sum;
+            }
+        }
         System.out.println(max);
     }
 }
