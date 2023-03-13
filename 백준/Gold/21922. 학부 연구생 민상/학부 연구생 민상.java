@@ -1,21 +1,13 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     static int N, M;
     static int[][] map;
-    static boolean[][] visited;
     static boolean[][] windCome;
     // 상 하 좌 우
     static int[] dRow = {-1, 1, 0, 0};
     static int[] dCol = {0, 0, -1, 1};
-
-
     static class Info{
         int row, col, dir;
         public Info(int row, int col, int dir){
@@ -48,11 +40,11 @@ public class Main {
         }
 
         for(int i = 0; i < list.size(); i++){
-            visited = new boolean[N][M];
             // 에어컨 위치 바람 처리
             windCome[list.get(i).row][list.get(i).col] = true;
             bfs(list.get(i).row, list.get(i).col);
         }
+
         int result = 0;
         for(int i = 0; i < N; i++){
             for(int j = 0; j < M; j++){
@@ -65,6 +57,7 @@ public class Main {
     private static void bfs(int row, int col) {
         Queue<Info> q = new LinkedList<>();
 
+        // 초기 4방향 바람 뿌리기
         for(int i = 0; i < 4; i++){
             int nextRow = row + dRow[i];
             int nextCol = col + dCol[i];
