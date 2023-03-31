@@ -12,7 +12,7 @@
 
 ### 문제 설명
 
-<p>챔피언스 리그 결승전을 앞두고 있는 맨체스터 유나이티드의 명장 퍼거슨 감독은 이번 경기에 4-4-2 다이아몬드 전술을 사용하려고 한다.<img alt="" src="https://www.acmicpc.net/upload/images/442.png" style="width: 170px; height: 226px; float: right;"></p>
+<p>챔피언스 리그 결승전을 앞두고 있는 맨체스터 유나이티드의 명장 퍼거슨 감독은 이번 경기에 4-4-2 다이아몬드 전술을 사용하려고 한다.<img alt="" src="" style="width: 170px; height: 226px; float: right;"></p>
 
 <p>오늘 결승전에 뛸 선발 선수 11명은 미리 골라두었지만, 어떤 선수를 어느 포지션에 배치해야 할지 아직 결정하지 못했다.</p>
 
