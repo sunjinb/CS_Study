@@ -3,31 +3,36 @@ import java.util.*;
 
 public class Main {
     static int N;
-    static int zeroCount;
-    static int oneCount;
-    static int zeroPlusOne;
+    static int[][] memo = new int[41][2]; // 호출 횟수 저장
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
+
+        for(int i = 0; i < 41; i++){
+            for(int j = 0; j < 2; j++){
+                memo[i][j] = -1;
+            }
+        }
+
+        memo[0][0] = 1;
+        memo[0][1] = 0;
+        memo[1][0] = 0;
+        memo[1][1] = 1;
 
         int T = Integer.parseInt(br.readLine());
         for(int testCase = 1; testCase <= T; testCase++) {
             N = Integer.parseInt(br.readLine());
             fibo(N);
-            System.out.println(zeroCount + " " + oneCount);
+            System.out.println(memo[N][0] + " " + memo[N][1]);
         }
     }
-
-    private static void fibo(int n) {
-        zeroCount = 1;
-        oneCount = 0;
-        zeroPlusOne = 1;
-
-        for(int i = 0; i < N; i++){
-            zeroCount = oneCount;
-            oneCount = zeroPlusOne;
-            zeroPlusOne = zeroCount + oneCount;
+    private static int[] fibo(int n) {
+        if(memo[n][0] == -1 || memo[n][1] == -1){
+            memo[n][0] = fibo(n - 1)[0] + fibo(n - 2)[0];
+            memo[n][1] = fibo(n - 1)[1] + fibo(n - 2)[1];
         }
-    }
 
+        return memo[n];
+    }
 }
