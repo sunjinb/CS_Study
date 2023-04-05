@@ -40,7 +40,9 @@ public class Main {
         // 다음 재귀 타고 map 건들겠지? 그럼 돌아왔을때는 그 전 상태의 맵으로 작업해야겠지? 그러니까 복사 해놔야겠지?
         int[][] tmpMap = new int[N][N];
         for(int i = 0; i < N; i++){
-            tmpMap[i] = map[i].clone();
+            for(int j = 0; j < N; j++){
+                tmpMap[i][j] = map[i][j];
+            }
         }
 
         for(int dir = 0; dir < 4; dir++){
@@ -48,7 +50,9 @@ public class Main {
             dfs(depth + 1);
             // 재귀 타고 다시 돌아오면 map을 기억해놨던 걸로 다시 복사해서 써야겠지?
             for(int i = 0; i < N; i++){
-                map[i] = tmpMap[i].clone();
+                for(int j = 0; j < N; j++){
+                    map[i][j] = tmpMap[i][j];
+                }
             }
         }
     }
