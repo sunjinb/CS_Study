@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Main {
 	static int R, C, N;
+	static StringBuilder sb = new StringBuilder();
 	static char[][] map;
 	static int[][] timer;
 	static int[] dRow = {-1, 1, 0, 0};
@@ -48,6 +49,17 @@ public class Main {
 //    	printTimer();
 //    	remakeMap();
 //    	print();
+        
+        
+        if(N % 2 == 0) {
+        	N = 2;
+        }
+        else if(N % 4 == 3) {
+        	N = 3;
+        }
+        else if(N % 4 == 1) {
+        	N = 5;
+        }
     	
         // 루프 한 번 돌 때마다 
         while(count < N) {
@@ -142,9 +154,10 @@ public class Main {
 	private static void print() {
         for(int i = 0; i < R; i++) {
         	for(int j = 0; j < C; j++) {
-        		System.out.print(map[i][j]);
+        		sb.append(map[i][j]);
         	}
-        	System.out.println();
+        	sb.append("\n");
         }
+        System.out.println(sb);
     }
 }
