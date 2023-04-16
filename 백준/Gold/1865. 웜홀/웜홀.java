@@ -48,10 +48,10 @@ public class Main {
                 list.add(new Edge(from, to, -cost));
             }
 
-            if(BellmanFord()) sb.append(("YES\n"));
-            else sb.append("NO\n");
+            if(BellmanFord()) System.out.println("YES");
+            else System.out.println("NO");
         }
-        System.out.println(sb);
+        
     }
 
     // 그냥 음의 사이클이 발생하는지 안 하는지 여부만 판단하면 됨
