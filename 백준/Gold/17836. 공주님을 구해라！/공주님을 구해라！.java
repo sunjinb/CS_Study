@@ -46,6 +46,8 @@ public class Main {
 	    while(!q.isEmpty()) {
 	    	Point now = q.poll();
 	    	
+	    	if(now.time > T) continue;
+	    	
 	    	boolean nextPower = false;
 	    	if(map[now.row][now.col] == 2 || now.getSuperPower) nextPower = true;
 	    	
