@@ -1,62 +1,57 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
-	static int N;
-	static int[][] map;
-	static boolean[][] visited;
-	static int[] dRow = {1, 0};
-	static int[] dCol = {0, 1};
-	static class Point{
-		int row, col;
-		public Point(int row, int col) {
-			this.row = row;
-			this.col = col;
-		}
-	}
-	public static void main(String[] args) throws Exception {
-	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    StringTokenizer st;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+		int[][] map = new int[N][N];
 
-	    N = Integer.parseInt(br.readLine());
-	    map = new int[N][N];
-	    
-	    for(int i = 0; i < N; i++) {
-	    	st = new StringTokenizer(br.readLine());
-	    	for(int j = 0; j < N; j++) {
-	    		map[i][j] = Integer.parseInt(st.nextToken());
-	    	}
-	    }
-	    
-	    Queue<Point> q = new LinkedList<>();
-	    visited = new boolean[N][N];
-	    
-	    q.add(new Point(0, 0));
-	    visited[0][0] = true;
-	    
-	    
-	    boolean flag = false;
-	    while(!q.isEmpty()) {
-	    	Point now = q.poll();
-	    	
-	    	if(now.row == N - 1 && now.col == N - 1) {
-	    		flag = true;
-	    		break;
-	    	}
-	    	
-	    	for(int i = 0; i < 2; i++) {
-	    		int nextRow = now.row + dRow[i] * map[now.row][now.col];
-	    		int nextCol = now.col + dCol[i] * map[now.row][now.col];
-	    		
-	    		if(nextRow < 0 || nextCol < 0 || nextRow >= N || nextCol >= N) continue;
-	    		
-	    		if(visited[nextRow][nextCol]) continue;
-	    		visited[nextRow][nextCol] = true;
-	    		q.add(new Point(nextRow, nextCol));
-	    	}
-	    }
-	    
-	    if(flag) System.out.println("HaruHaru");
-	    else System.out.println("Hing");
+		String answer = "Hing";
+
+		for(int i = 0 ; i < N ; i++){
+			String[] tmp = br.readLine().split(" ");
+			for(int j = 0 ; j < N ; j++){
+				map[i][j] = Integer.parseInt(tmp[j]);
+			}
+		}
+
+		Queue<Node> q = new LinkedList<>();
+		q.add(new Node(0, 0));
+
+		while (!q.isEmpty()){
+			Node now = q.poll();
+			int r = now.r;
+			int c = now.c;
+			int delta = map[now.r][now.c];
+
+			map[now.r][now.c] = 0;
+
+			if(delta == -1){
+				answer = "HaruHaru";
+				break;
+			}
+
+			if(c+delta < N && map[r][c+delta] != 0){
+				q.add(new Node(r, c+delta));	// 오른쪽 이동
+			}
+			if(r+delta < N && map[r+delta][c] != 0){
+				q.add(new Node(r+delta, c));	// 아래로 이동
+			}
+		}
+		System.out.println(answer);
+	}
+
+	static class Node{
+		int r;
+		int c;
+
+		Node(int row, int col){
+			this.r = row;
+			this.c = col;
+		}
 	}
 }
