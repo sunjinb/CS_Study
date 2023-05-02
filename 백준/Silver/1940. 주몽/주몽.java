@@ -20,16 +20,18 @@ public class Main {
 		
 		int result = 0;
 		Arrays.sort(arr);
-		for(int onePointer = 0; onePointer < N - 1; onePointer++) {
-			int firstNum = arr[onePointer];
-			for(int twoPointer = onePointer + 1; twoPointer < N; twoPointer++) {
-				int secondNum = arr[twoPointer];
-				
-				int sum = firstNum + secondNum;
-				
-				if(sum > M) break;
-				
-				if(sum == M) result++;
+		
+		int onePointer = 0;
+		int twoPointer = N - 1;
+		
+		while(onePointer != twoPointer && onePointer < twoPointer) {
+			int sum = arr[onePointer] + arr[twoPointer];
+			if(sum > M) twoPointer--;
+			else if(sum < M) onePointer++;
+			else if(sum == M) {
+				result++;
+				onePointer++;
+				twoPointer--;
 			}
 		}
 		
