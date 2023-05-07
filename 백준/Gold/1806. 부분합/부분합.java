@@ -14,7 +14,7 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         S = Integer.parseInt(st.nextToken());
 
-        arr = new int[N + 1];
+        arr = new int[N];
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < N; i++){
             arr[i] = Integer.parseInt(st.nextToken());
@@ -25,7 +25,7 @@ public class Main {
         int sum = 0;
         int minLength = Integer.MAX_VALUE;
 
-        while(twoPointer <= N){
+        while(true){
             // 현재까지 합이 S이상일 경우
             if(S <= sum){
                 sum -= arr[onePointer];
@@ -33,7 +33,9 @@ public class Main {
                 int tmpLength = twoPointer - onePointer + 1;
                 minLength = Math.min(tmpLength, minLength);
             }
-
+            else if(twoPointer == N){
+                break;
+            }
             // 조건 충족 안되는 경우
             else{
                 sum += arr[twoPointer];
