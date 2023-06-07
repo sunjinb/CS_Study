@@ -4,14 +4,13 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Main{
+public class Main {
     static char[][] map;
     static class Point{
-        int row, col, time;
-        public Point(int row, int col, int time){
+        int row, col;
+        public Point(int row, int col){
             this.row = row;
             this.col = col;
-            this.time = time;
         }
     }
     static int[] dRow = {-1, -1, -1, 0, 0, 0, 1, 1, 1};
@@ -29,7 +28,7 @@ public class Main{
         }
 
         Queue<Point> q = new LinkedList<>();
-        q.add(new Point(7, 0, 0));
+        q.add(new Point(7, 0));
 
         boolean flag = false;
         
@@ -60,7 +59,7 @@ public class Main{
                     if(nextRow < 0 || nextCol < 0 || nextRow > 7 || nextCol > 7) continue;
 
                     if(map[nextRow][nextCol] == '.'){
-                        q.add(new Point(nextRow, nextCol, now.time + 1));
+                        q.add(new Point(nextRow, nextCol));
                     }
                 }
             }
@@ -68,8 +67,6 @@ public class Main{
             if(flag) break;
             moveWall();
         }
-
-        
 
         if(!flag) System.out.println(0);
         else System.out.println(1);
