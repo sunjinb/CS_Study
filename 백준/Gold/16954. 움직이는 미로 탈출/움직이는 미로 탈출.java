@@ -46,6 +46,11 @@ public class Main {
                 if(map[now.row][now.col] == '#'){
                     continue;
                 }
+                
+                if(now.row == 2) {
+                    flag = true;
+                    break;
+                }
 
                 if(now.row == 0 && now.col == 7){
                     flag = true;
