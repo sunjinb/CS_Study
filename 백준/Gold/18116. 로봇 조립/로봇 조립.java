@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int N;
-    static final int INF = 10000004;
+    static final int INF = 1000004;
     static int[] parents;
     static int[] count;
     public static void main(String[] args) throws IOException {
