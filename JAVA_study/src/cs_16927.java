@@ -4,17 +4,21 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class cs_16927 {
+    static int N, M, R;
+    static int[][] map;
+    static int[] dRow = {0, 1, 0, -1};
+    static int[] dCol = {1, 0, -1, 0};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         StringTokenizer st;
 
         st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int R = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        R = Integer.parseInt(st.nextToken());
 
-        int[][] map = new int[N][M];
+        map = new int[N][M];
         for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
             for(int j = 0; j < M; j++){
@@ -23,29 +27,12 @@ public class cs_16927 {
         }
 
         int boxCount = Math.min(N, M) / 2;
-        int[] dRow = {0, 1, 0 ,-1};
-        int[] dCol = {1, 0, -1, 0};
-        for(int rotate = 0; rotate < R; rotate++){
-            for(int start = 0; start < boxCount; start++){
-                int dir = 0;
-                int curRow = start;
-                int curCol = start;
-                int startValue = map[curRow][curCol];
-                while(dir < 4){
-                    int nextRow = curRow + dRow[dir];
-                    int nextCol = curCol + dCol[dir];
-
-                    if(nextRow < start || nextCol < start || nextRow >= N - start || nextCol >= M - start) {
-                        dir++;
-                    }
-                    else{
-                        map[curRow][curCol] = map[nextRow][nextCol];
-                        curRow = nextRow;
-                        curCol = nextCol;
-                    }
-                }
-                map[start + 1][start] = startValue;
-            }
+        int nextN = N, nextM = M;
+        for(int i = 0; i < boxCount; i++){
+            int elementCount = 2 * nextN + 2 * nextM - 4;
+            rotate(i, elementCount);
+            nextN -= 2;
+            nextM -= 2;
         }
 
         for(int i = 0; i < N; i++){
@@ -54,6 +41,35 @@ public class cs_16927 {
             }
             sb.append("\n");
         }
+
         System.out.println(sb);
+    }
+
+    private static void rotate(int startPoint, int elementCount) {
+        int rotateCount = R % elementCount;
+
+        for(int rc = 0; rc < rotateCount; rc++){
+            int startValue = map[startPoint][startPoint];
+
+            int dir = 0;
+            int row = startPoint;
+            int col = startPoint;
+
+            while(dir < 4){
+                int nextRow = row + dRow[dir];
+                int nextCol = col + dCol[dir];
+
+                if(nextRow < startPoint || nextRow >= N - startPoint || nextCol < startPoint || nextCol >= M - startPoint) {
+                    dir++;
+                }
+                else{
+                    map[row][col] = map[nextRow][nextCol];
+                    row = nextRow;
+                    col = nextCol;
+                }
+            }
+
+            map[startPoint + 1][startPoint] = startValue;
+        }
     }
 }
