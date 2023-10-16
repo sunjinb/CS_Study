@@ -1,10 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
     static int nA, nB;
@@ -17,21 +14,31 @@ public class Main {
         nB = Integer.parseInt(st.nextToken());
 
         HashMap<Integer, Integer> mapA = new HashMap<>();
+        Set<Integer> setA = new HashSet<>();
         HashMap<Integer, Integer> mapB = new HashMap<>();
+        Set<Integer> setB = new HashSet<>();
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < nA; i++){
-            mapA.put(Integer.parseInt(st.nextToken()), 1);
+            setA.add(Integer.parseInt(st.nextToken()));
+//            mapA.put(Integer.parseInt(st.nextToken()), 1);
         }
 
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i < nB; i++){
-            mapB.put(Integer.parseInt(st.nextToken()), 1);
+            setB.add(Integer.parseInt(st.nextToken()));
+//            mapB.put(Integer.parseInt(st.nextToken()), 1);
         }
 
         ArrayList<Integer> resultList = new ArrayList<>();
+//
+//        for(int t : mapA.keySet()){
+//            if (!mapB.containsKey(t)) {
+//                resultList.add(t);
+//            }
+//        }
 
-        for(int t : mapA.keySet()){
-            if (!mapB.containsKey(t)) {
+        for(int t : setA){
+            if(!setB.contains(t)){
                 resultList.add(t);
             }
         }
